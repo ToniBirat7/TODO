@@ -1,0 +1,25 @@
+{% extends 'main_app/home.html' %}
+{% block title %} TODO | Search {% endblock title %}
+{% block content %}
+<h1> Search Result </h1>
+{% if todo %}
+{% for item in todo %}
+    <div class="container">
+    <div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Task</h5>
+        <h5 class="card-title">{{item.title}}</h5>
+        <p class="card-text">{{item.description}}</p>
+        <p> Created By : {{item.user.username}} </p>
+        {% if item.is_completed == 'Fasle'  %}
+            <p class="card-text">Not Completed</p>
+        {% else %}
+            <p class="card-text">Completed</p>
+        {% endif %}
+    </div>
+    </div>
+    </div>
+
+    {% endfor %}
+    {% endif  %}
+ {% endblock content %}

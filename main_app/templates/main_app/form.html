@@ -1,0 +1,28 @@
+
+{% extends 'core/base.html'%}
+{% block title %} Add Todo {% endblock title %} 
+    <div class="container">
+
+{% block content %}
+<h1> Add TODO </h1>
+    <form method="POST" >
+    {% csrf_token %}
+
+    {% comment %} user = models.ForeignKey(User, on_delete=models.CASCADE) {% endcomment %}
+
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" name="title">
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <input type="textbox" class="form-control" id="description" name="description">
+    </div>
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="is_completed" name="is_completed">
+        <label class="form-check-label" for="is_completed">Is Completed</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock content %}
+ </div>
