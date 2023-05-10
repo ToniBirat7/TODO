@@ -1,6 +1,5 @@
-
 {% extends 'core/base.html'%}
-{% block title %} Add Todo {% endblock title %} 
+{% block title %} Edit | Todo {% endblock title %} 
     <div class="container">
 
 {% block content %}
@@ -12,13 +11,13 @@
 
     <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" name="title">
+        <input type="text" class="form-control" id="title" name="title" value="{{data.title}}">
     </div>
     <div class="form-group">
         <label for="description">Description</label>
-        <input type="textbox" class="form-control" id="description" name="description">
+        <input type="textbox" class="form-control" id="description" name="description" value="{{data.description}}">
     </div>
-    <button type="submit" class="btn btn-primary">Add TODO</button>
+    <button type="submit" class="btn btn-primary">Edit TODO</button>
     </form>
 {% endblock content %}
  </div>
