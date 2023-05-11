@@ -19,12 +19,16 @@ def Register(request):
 def Login(request):
      if request.method == 'GET':
           return render(request, 'auth_app/login.html')
+     
      else:
           username = request.POST['username']
           password = request.POST['password']
      user = authenticate(request,username=username,password=password)
      if user is not None:
           login(request,user)
+          next_url = request.GET.get('next')
+          if next_url is not None: 
+               return redirect(next_url)
           return redirect('home')
      else:
           return redirect('login')
@@ -32,3 +36,6 @@ def Login(request):
 def Logout(request):
      logout(request)
      return redirect('login')
+
+def Not_Found(request):
+     return render(request,'core/404.html')

@@ -1,10 +1,10 @@
 {% extends 'core/base.html' %}
 {% block title %} TODO | Home {% endblock title %}
 
-{% block content %}
-<form class="form-inline my-2 my-lg-0", method="GET">
+{% block content %} 
+<form class="form-inline my-2 my-lg-0", method="GET" >
     {% csrf_token %}
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" value="{{request.session.search}}" name="search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 <h1 style="text-align: center ;"> TODO List </h1>
@@ -16,9 +16,10 @@
         <h5 class="card-title">{{item.title}}</h5>
         <p class="card-text">{{item.description}}</p>
         <p> Created By : {{item.user.username}} </p>
-        {% comment %} <p class="card-text">{{item.is_completed}}</p> {% endcomment %}
+        {% if request.user.is_superuser or request.user.id == item.user.id %} 
         <a href="{% url 'edit' id=item.id %}" class="btn btn-primary">Edit</a>
         <a href="{% url 'delete' id=item.id %}" class="btn btn-danger">Delete</a>
+        {% endif %}
     </div>
     </div>
     </div>
