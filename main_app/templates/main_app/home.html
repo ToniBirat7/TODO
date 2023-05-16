@@ -2,23 +2,44 @@
 {% block title %} TODO | Home {% endblock title %}
 
 {% block content %} 
+{% comment %} 
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul> 
+{% endif %} {% endcomment %}
+
 <form class="form-inline my-2 my-lg-0", method="GET" >
     {% csrf_token %}
       <input class="form-control mr-sm-2" type="search" placeholder="Search" value="{{request.session.search}}" name="search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+{% for message in messages %}
+<h1 style="text-align: center;"> {{message}} </h1>
+{% endfor %}
 <h1 style="text-align: center ;"> TODO List </h1>
 {% for item in data%}
     <div class="container">
     <div class="card" style="width: 18rem;">
     <div class="card-body">
-        <h5 class="card-title">Task  {{doto}}</h5>
-        <h5 class="card-title">{{item.title}}</h5>
-        <p class="card-text">{{item.description}}</p>
+        <h5 class="card-title" style="text-align:center;">User Id : {{item.id}} </h5>
+        <h5 class="card-title" style="text-align:center;">{{item.title}}</h5>
+        <p class="card-text" style="text-align:center;">{{item.description}}</p>
+        <h5 class="card-title" style="text-align:center;">Created Date : {{item.created_date}} </h5>
+        <h5 class="card-title" style="text-align:center;">Created Date : {{item.updated_date}} </h5>
         <p> Created By : {{item.user.username}} </p>
         {% if request.user.is_superuser or request.user.id == item.user.id %} 
         <a href="{% url 'edit' id=item.id %}" class="btn btn-primary">Edit</a>
         <a href="{% url 'delete' id=item.id %}" class="btn btn-danger">Delete</a>
+        {% if item.is_completed and request.user.is_superuser %}
+         <a href="{% url 'complete' id=item.id %}" class="btn btn-danger">Incomplete</a>
+        {% elif item.is_completed and request.user.id == item.user.id %}
+        <a href="{% url 'complete' id=item.id %}" class="btn btn-primary">Inomplete</a>
+        {% else %}
+        <a href="{% url 'complete' id=item.id %}" class="btn btn-primary">Complete</a>
+        {% endif %}
         {% endif %}
     </div>
     </div>
@@ -27,5 +48,4 @@
  <div class="container">
     <a href="{% url 'add' %}" class="btn btn-primary">Add Todo</a>
  </div>
-
 {% endblock content %}
